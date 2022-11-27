@@ -53,8 +53,8 @@ public class Curve3D
         if (percent >= 1)
             return end.pos;
 
-        Vector3 startPoint = start.pos + start.rot * Vector3.forward * startLength;
-        Vector3 endPoint = end.pos - end.rot * Vector3.forward * endLength;
+        Vector3 startPoint = GetStartControlPoint();
+        Vector3 endPoint = GetEndControlPoint();
 
         Vector3 p1 = start.pos * (1 - percent) + startPoint * percent;
         Vector3 p2 = startPoint * (1 - percent) + endPoint * percent;
@@ -100,5 +100,28 @@ public class Curve3D
         }
 
         return length;
+    }
+
+    Vector3 GetStartControlPoint()
+    {
+        return start.pos + start.rot * Vector3.forward * startLength;
+    }
+
+    Vector3 GetEndControlPoint()
+    {
+        return end.pos - end.rot * Vector3.forward * endLength;
+    }
+
+    public Bounds GetBounds()
+    {
+        Vector3 p1 = GetStartControlPoint();
+        Vector3 p2 = GetEndControlPoint();
+
+        Bounds b = new Bounds(start.pos, Vector3.zero);
+        b.Encapsulate(end.pos);
+        b.Encapsulate(p1);
+        b.Encapsulate(p2);
+
+        return b;
     }
 }

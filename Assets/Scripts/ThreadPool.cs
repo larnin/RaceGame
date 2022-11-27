@@ -10,12 +10,14 @@ public static class ThreadPool
 {
     class Job
     {
+        public System.Object obj;
         public Action job;
         public Action endCallback;
         public int priority;
 
-        public Job(Action _job, Action _endCallback, int _priority = 1)
+        public Job(System.Object _obj, Action _job, Action _endCallback, int _priority = 1)
         {
+            obj = _obj;
             job = _job;
             endCallback = _endCallback;
             priority = _priority;
@@ -89,7 +91,7 @@ public static class ThreadPool
         j.endCallback();
     }
 
-    static void StartJob(Action job, Action endCallback, int priority = 1)
+    public static void StartJob(System.Object obj, Action job, Action endCallback, int priority = 1)
     {
         if (!m_started)
             InitThreads();
@@ -97,7 +99,7 @@ public static class ThreadPool
         if (m_aborted)
             return;
 
-        Job j = new Job(job, endCallback, priority);
+        Job j = new Job(obj, job, endCallback, priority);
 
         lock(m_pendingJobsLock)
         {
