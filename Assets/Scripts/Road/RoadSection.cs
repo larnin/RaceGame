@@ -80,6 +80,8 @@ public class RoadSection : MonoBehaviour
             var mesh = m_collisionList[i].collider.sharedMesh;
 
             m_renderer.MakeCollisionMesh(mesh, i);
+
+            m_collisionList[i].collider.sharedMesh = mesh;
         }
     }
 

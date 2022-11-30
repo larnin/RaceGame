@@ -120,9 +120,6 @@ public class RoadRender
 
             //full chunk layer
             mesh.bounds = m_initialData.shape.GetBounds(m_initialData.curve3D);
-
-            mesh.RecalculateNormals();
-            mesh.RecalculateTangents();
         }
     }
 
